@@ -1,0 +1,10 @@
+---
+- name: Break webserver
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Stop httpd service
+      ansible.builtin.service:
+        name: httpd
+        state: stopped
