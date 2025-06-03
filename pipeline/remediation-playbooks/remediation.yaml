@@ -1,9 +1,0 @@
----
-- name: Restart firewalld service
-  hosts: all
-  become: true
-  tasks:
-    - name: Restart firewalld
-      service:
-        name: firewalld
-        state: restarted
