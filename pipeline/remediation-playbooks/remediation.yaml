@@ -1,8 +1,9 @@
 ---
-- hosts: all
+- name: Restart firewalld service
+  hosts: all
   become: true
   tasks:
-    - name: Restart httpd service
+    - name: Restart firewalld
       service:
-        name: httpd
+        name: firewalld
         state: restarted
