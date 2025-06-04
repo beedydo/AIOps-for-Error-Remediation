@@ -1,6 +1,6 @@
 ---
 - name: Break webserver
-  hosts: 52.221.254.181
+  hosts: all
   become: true
 
   tasks:
