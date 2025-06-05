@@ -1,9 +1,0 @@
-- name: Block port 80
-  hosts: webservers
-  tasks:
-    - name: Add reject rule
-      ansible.posix.firewalld:
-        port: 80/tcp
-        state: disabled
-        permanent: yes
-        immediate: yes

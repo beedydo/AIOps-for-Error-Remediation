@@ -1,10 +1,16 @@
 ---
-- name: Break webserver
-  hosts: all
-  become: true
-
+- name: Simulate web server failure
+  hosts: webservers
+  become: yes
   tasks:
     - name: Stop httpd service
       ansible.builtin.service:
         name: httpd
         state: stopped
+
+    - name: Block port 80
+      ansible.posix.firewalld:
+        port: 80/tcp
+        state: disabled
+        permanent: yes
+        immediate: yes
