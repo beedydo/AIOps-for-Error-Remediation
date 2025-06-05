@@ -42,3 +42,49 @@
         state: enabled
         permanent: yes
         immediate: yes
+
+- name: Host a simple hello world webserver on RHEL with custom background color
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install httpd
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+
+    - name: Enable and start httpd service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Create index.html with hello world and custom background color
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Hello World</title>
+            <style>
+              body {
+                background-color: #cbf7f4;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                font-family: Arial, sans-serif;
+              }
+              h1 {
+                color: #333;
+                font-size: 3em;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>Hello, World!</h1>
+          </body>
+          </html>
