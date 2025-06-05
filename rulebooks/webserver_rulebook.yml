@@ -4,7 +4,7 @@
   sources:
     - ansible.eda.service_status:
         name: httpd
-        interval: 30  # Check every 30 seconds
+        interval: 10  # Check every 30 seconds
         state: active
 
   rules:
