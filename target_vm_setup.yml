@@ -1,0 +1,44 @@
+---
+- name: Install and configure web server and firewall
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Apache HTTP Server
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+
+    - name: Enable and start httpd service
+      ansible.builtin.service:
+        name: httpd
+        enabled: true
+        state: started
+
+    - name: Install firewall dependencies
+      ansible.builtin.dnf:
+        name:
+          - firewalld
+          - python3-firewall
+          - python3
+        state: present
+
+    - name: Enable and start firewalld service
+      ansible.builtin.service:
+        name: firewalld
+        enabled: true
+        state: started
+
+    - name: permanently enable https service, also enable it immediately if possible
+      ansible.posix.firewalld:
+        service: https
+        state: enabled
+        permanent: true
+        immediate: true
+        offline: true
+
+    - name: Open port 80
+      ansible.posix.firewalld:
+        port: 80/tcp
+        state: enabled
+        permanent: yes
+        immediate: yes
