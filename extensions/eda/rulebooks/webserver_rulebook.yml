@@ -1,0 +1,17 @@
+---
+- name: HTTPD Service Monitor and Remediation
+  hosts: webservers
+  sources:
+    - ansible.eda.service_status:
+        name: httpd
+        interval: 30  # Check every 30 seconds
+        state: active
+
+  rules:
+    - name: Restart HTTPD if service fails
+      condition: event.service_status.status == "inactive"
+      action:
+        run_playbook:
+          name: remediate_httpd.yml
+          extra_vars:
+            target_host: "{{ event.service_status.host }}"
