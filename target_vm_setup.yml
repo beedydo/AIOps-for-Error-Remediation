@@ -43,20 +43,10 @@
         permanent: yes
         immediate: yes
 
-- name: Host a simple hello world webserver on RHEL with custom background color
+- name: Host a simple hello world webserver on RHEL
   hosts: all
   become: yes
   tasks:
-    - name: Install httpd
-      ansible.builtin.dnf:
-        name: httpd
-        state: present
-
-    - name: Enable and start httpd service
-      ansible.builtin.service:
-        name: httpd
-        state: started
-        enabled: yes
 
     - name: Create index.html with hello world and custom background color
       ansible.builtin.copy:
