@@ -1,0 +1,33 @@
+---
+- name: Auto-heal web server
+  hosts: webservers
+  become: yes
+  vars:
+    max_retries: 3
+    retry_delay: 10
+
+  tasks:
+    - name: Ensure httpd is running
+      ansible.builtin.service:
+        name: httpd
+        state: started
+      register: svc_result
+      until: svc_result is succeeded
+      retries: "{{ max_retries }}"
+      delay: "{{ retry_delay }}"
+
+    - name: Reopen port 80
+      ansible.posix.firewalld:
+        port: 80/tcp
+        state: enabled
+        permanent: yes
+        immediate: yes
+
+    - name: Verify restoration
+      ansible.builtin.uri:
+        url: http://localhost/server-status
+        status_code: 200
+      register: verify
+      until: verify.status == 200
+      retries: "{{ max_retries }}"
+      delay: "{{ retry_delay }}"
