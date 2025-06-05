@@ -2,6 +2,9 @@
 - name: Simulate web server failure
   hosts: webservers
   become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    
   tasks:
     - name: Stop httpd service
       ansible.builtin.service:
