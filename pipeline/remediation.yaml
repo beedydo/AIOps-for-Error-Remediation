@@ -1,0 +1,28 @@
+---
+- name: Restart D-Bus and Firewalld
+  hosts: all
+  become: true
+  tasks:
+    - name: Restart D-Bus service
+      systemd:
+        name: dbus
+        state: restarted
+        enabled: true
+      ignore_errors: true
+
+    - name: Restart Firewalld service
+      systemd:
+        name: firewalld
+        state: restarted
+        enabled: true
+      ignore_errors: true
+
+    - name: Reload Firewalld
+      command: firewall-cmd --reload
+      ignore_errors: true
+
+    - name: Verify Firewalld status
+      systemd:
+        name: firewalld
+        state: started
+        enabled: true
