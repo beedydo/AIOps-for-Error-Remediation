@@ -3,7 +3,7 @@
   hosts: webservers
   become: true
   gather_facts: false
-  
+ 
   tasks:
     - name: Display debug message
       ansible.builtin.debug:

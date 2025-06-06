@@ -14,24 +14,24 @@
         - debug:
             msg: "Webserver is up"
 
-#    - name: "Webserver is down"
-#      condition: event.url_check.status == "down"
-#      actions:
-#        - debug:
-#           msg: "Webserver is down"
+    - name: "Webserver is down"
+      condition: event.url_check.status == "down"
+      actions:
+        - debug:
+           msg: "Webserver is down"
 
     - name: "Webserver service is down"
       condition: >
         event.url_check.status == 'down'
-        event.url_check.error_msg is defined
+        and event.url_check.error_msg is defined
       action:
         run_playbook:
           name: "website_service_down.yml"
 
     - name: "Webserver is down index missing"
       condition: >
-        event.url_check.status == 'down'
-        event.url_check.status_code == 404
+         event.url_check.status == 'down'
+        and event.url_check.status_code == 404
       action:
         run_playbook:
           name: "website_index_down.yml"
