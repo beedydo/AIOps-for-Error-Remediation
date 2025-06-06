@@ -1,0 +1,17 @@
+---
+- name: Restoring website content
+  hosts: webservers
+  become: true
+  gather_facts: false
+  
+  tasks:
+    - name: Display debug message
+      ansible.builtin.debug:
+        msg: "Website is down"
+
+    - name: Repalce index.html file
+      ansible.builtin.copy:
+        remore_src: true
+        src: /tmp/index.html
+        dest: /var/www/html
+        

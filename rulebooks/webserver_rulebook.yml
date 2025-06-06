@@ -1,17 +1,37 @@
 ---
-- name: HTTPD Service Monitor and Remediation
-  hosts: webservers
+- name: "Make sure the webserver is up and running"
+  hosts: aiops.demo.vm
   sources:
-    - ansible.eda.service_status:
-        name: httpd
-        interval: 10  # Check every 30 seconds
-        state: active
+    - ansible.eda.url_check:
+        urls:
+          - http://52.221.254.181
+        delay: 10
 
   rules:
-    - name: Restart HTTPD if service fails
-      condition: event.service_status.status == "inactive"
+    - name: "Webserver is up"
+      condition: event.url_check.status == "up"
+      actions:
+        - debug:
+            msg: "Webserver is up"
+
+#    - name: "Webserver is down"
+#      condition: event.url_check.status == "down"
+#      actions:
+#        - debug:
+#           msg: "Webserver is down"
+
+    - name: "Webserver service is down"
+      condition: >
+        event.url_check.status == 'down'
+        event.url_check.error_msg is defined
       action:
         run_playbook:
-          name: remediate_httpd.yml
-          extra_vars:
-            target_host: "{{ event.service_status.host }}"
+          name: "website_service_down.yml"
+
+    - name: "Webserver is down index missing"
+      condition: >
+        event.url_check.status == 'down'
+        event.url_check.status_code == 404
+      action:
+        run_playbook:
+          name: "website_index_down.yml"
