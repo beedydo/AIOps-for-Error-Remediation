@@ -1,28 +1,49 @@
 ---
-- name: Restart D-Bus and Firewalld
-  hosts: all
+- hosts: all
   become: true
   tasks:
-    - name: Restart D-Bus service
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+      notify:
+        - Restart httpd
+
+    - name: Create /etc/sysconfig/httpd if it does not exist
+      file:
+        path: /etc/sysconfig/httpd
+        state: touch
+        mode: '0644'
+      when: "'No such file or directory' in error_message" # Replace error_message with the actual variable containing the error
+
+    - name: Start httpd service
       systemd:
-        name: dbus
-        state: restarted
+        name: httpd
+        state: started
         enabled: true
       ignore_errors: true
 
-    - name: Restart Firewalld service
-      systemd:
-        name: firewalld
-        state: restarted
-        enabled: true
-      ignore_errors: true
-
-    - name: Reload Firewalld
-      command: firewall-cmd --reload
-      ignore_errors: true
-
-    - name: Verify Firewalld status
-      systemd:
+    - name: Ensure firewalld is running
+      service:
         name: firewalld
         state: started
         enabled: true
+
+    - name: Open port 80 in firewall
+      firewall:
+        port: 80/tcp
+        permanent: true
+        state: enabled
+      notify:
+        - Reload firewalld
+
+  handlers:
+    - name: Restart httpd
+      systemd:
+        name: httpd
+        state: restarted
+
+    - name: Reload firewalld
+      service:
+        name: firewalld
+        state: reloaded
