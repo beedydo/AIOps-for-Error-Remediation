@@ -9,130 +9,10 @@
       "id": "primary",
       "nodes": [
         {
-          "id": "6ddec80a-2904-4ffe-85a1-15f9869ad4a6",
-          "type": "execution_node",
-          "op": "execute-notebook-node",
-          "app_data": {
-            "label": "",
-            "component_parameters": {
-              "dependencies": [],
-              "include_subdirectories": false,
-              "outputs": [],
-              "env_vars": [],
-              "kubernetes_pod_annotations": [],
-              "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
-              "kubernetes_shared_mem_size": {},
-              "kubernetes_tolerations": [],
-              "mounted_volumes": [],
-              "filename": "1_fetch_error.ipynb"
-            },
-            "ui_data": {
-              "label": "1_fetch_error.ipynb",
-              "image": "/notebook/aiops-error-remediation/test/static/elyra/notebook.svg",
-              "x_pos": 181,
-              "y_pos": 313,
-              "description": "Run notebook file"
-            }
-          },
-          "inputs": [
-            {
-              "id": "inPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Input Port"
-                }
-              }
-            }
-          ],
-          "outputs": [
-            {
-              "id": "outPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Output Port"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "id": "0919fc1b-ceb0-4c26-98bf-196d06660991",
-          "type": "execution_node",
-          "op": "execute-notebook-node",
-          "app_data": {
-            "label": "",
-            "component_parameters": {
-              "dependencies": [],
-              "include_subdirectories": false,
-              "outputs": [],
-              "env_vars": [],
-              "kubernetes_pod_annotations": [],
-              "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
-              "kubernetes_shared_mem_size": {},
-              "kubernetes_tolerations": [],
-              "mounted_volumes": [],
-              "filename": "2_prompt_generation.ipynb"
-            },
-            "ui_data": {
-              "label": "2_prompt_generation.ipynb",
-              "image": "/notebook/aiops-error-remediation/test/static/elyra/notebook.svg",
-              "x_pos": 456,
-              "y_pos": 315,
-              "description": "Run notebook file"
-            }
-          },
-          "inputs": [
-            {
-              "id": "inPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Input Port"
-                }
-              },
-              "links": [
-                {
-                  "id": "8231a774-a872-492c-9a97-90d1f6d82709",
-                  "node_id_ref": "6ddec80a-2904-4ffe-85a1-15f9869ad4a6",
-                  "port_id_ref": "outPort"
-                }
-              ]
-            }
-          ],
-          "outputs": [
-            {
-              "id": "outPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Output Port"
-                }
-              }
-            }
-          ]
-        },
-        {
           "id": "c417a8a5-ef51-4368-95cb-2b31cbadaded",
           "type": "execution_node",
           "op": "execute-notebook-node",
           "app_data": {
-            "label": "",
             "component_parameters": {
               "dependencies": [],
               "include_subdirectories": false,
@@ -140,12 +20,19 @@
               "env_vars": [],
               "kubernetes_pod_annotations": [],
               "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
+              "kubernetes_secrets": [
+                {
+                  "env_var": "github_api_key",
+                  "name": "secret-zlbljo",
+                  "key": "github_api_key"
+                }
+              ],
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
               "filename": "3_git_push_playbook.ipynb"
             },
+            "label": "",
             "ui_data": {
               "label": "3_git_push_playbook.ipynb",
               "image": "/notebook/aiops-error-remediation/test/static/elyra/notebook.svg",
@@ -168,8 +55,8 @@
               },
               "links": [
                 {
-                  "id": "adc88a29-68fc-406f-9a27-761cf672d326",
-                  "node_id_ref": "0919fc1b-ceb0-4c26-98bf-196d06660991",
+                  "id": "cfba9a9b-2bfc-4819-88e7-dbee55cb0344",
+                  "node_id_ref": "9e6176ea-7ced-4529-9fd9-74d9ef30f508",
                   "port_id_ref": "outPort"
                 }
               ]
@@ -195,20 +82,28 @@
           "type": "execution_node",
           "op": "execute-notebook-node",
           "app_data": {
-            "label": "",
             "component_parameters": {
               "dependencies": [],
               "include_subdirectories": false,
-              "outputs": [],
+              "outputs": [
+                "job_template_id.json"
+              ],
               "env_vars": [],
               "kubernetes_pod_annotations": [],
               "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
+              "kubernetes_secrets": [
+                {
+                  "env_var": "aap_credential",
+                  "name": "secret-zlbljo",
+                  "key": "aap_credential"
+                }
+              ],
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
               "filename": "4_build_job_template.ipynb"
             },
+            "label": "",
             "ui_data": {
               "label": "4_build_job_template.ipynb",
               "image": "/notebook/aiops-error-remediation/test/static/elyra/notebook.svg",
@@ -258,20 +153,28 @@
           "type": "execution_node",
           "op": "execute-notebook-node",
           "app_data": {
-            "label": "",
             "component_parameters": {
-              "dependencies": [],
+              "dependencies": [
+                "error.txt"
+              ],
               "include_subdirectories": false,
               "outputs": [],
               "env_vars": [],
               "kubernetes_pod_annotations": [],
               "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
+              "kubernetes_secrets": [
+                {
+                  "env_var": "aap_credential",
+                  "name": "secret-zlbljo",
+                  "key": "aap_credential"
+                }
+              ],
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
               "filename": "5_execute_job_template.ipynb"
             },
+            "label": "",
             "ui_data": {
               "label": "5_execute_job_template.ipynb",
               "image": "/notebook/aiops-error-remediation/test/static/elyra/notebook.svg",
@@ -315,6 +218,76 @@
               }
             }
           ]
+        },
+        {
+          "id": "9e6176ea-7ced-4529-9fd9-74d9ef30f508",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [
+                "error.txt"
+              ],
+              "include_subdirectories": false,
+              "outputs": [
+                "remediation.yaml"
+              ],
+              "env_vars": [
+                {
+                  "env_var": "gemini_api_key"
+                }
+              ],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [
+                {
+                  "env_var": "gemini_api_key",
+                  "name": "secret-zlbljo",
+                  "key": "gemini_api_key"
+                }
+              ],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "2_playbook_generation.ipynb"
+            },
+            "label": "",
+            "ui_data": {
+              "label": "2_playbook_generation.ipynb",
+              "image": "/notebook/aiops-error-remediation/test/static/elyra/notebook.svg",
+              "x_pos": 448,
+              "y_pos": 318,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
         }
       ],
       "app_data": {
@@ -327,15 +300,16 @@
           "name": "openshift-ai",
           "runtime": "Data Science Pipelines",
           "pipeline_defaults": {
+            "kubernetes_tolerations": [],
+            "kubernetes_pod_annotations": [],
             "kubernetes_shared_mem_size": {},
             "kubernetes_pod_labels": [],
             "mounted_volumes": [],
-            "kubernetes_tolerations": [],
-            "kubernetes_pod_annotations": [],
             "kubernetes_secrets": [],
             "env_vars": [],
             "runtime_image": "quay.io/modh/runtime-images@sha256:7211b5e103ce288d724f12ea77504a576192ca74ba3b35b3450e22f420b60a78"
-          }
+          },
+          "pipeline_parameters": []
         }
       },
       "runtime_ref": ""
