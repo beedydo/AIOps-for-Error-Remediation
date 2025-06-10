@@ -27,5 +27,5 @@
         #  - event.url_check.error_msg is defined
       action:
         run_job_template:
-          name: Demo Job Template
+          name: Demo-Job-Template
           organization: Default
