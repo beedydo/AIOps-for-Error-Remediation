@@ -1,0 +1,21 @@
+---
+- name: "Make sure the webserver is up and running"
+  hosts: localhost
+  sources:
+    - ansible.eda.url_check:
+        urls:
+          - http://52.221.254.181
+        delay: 10
+
+  rules:
+    - name: "Webserver is up"
+      condition: event.url_check.status == "up"
+      actions:
+        - debug:
+            msg: "Webserver is up"
+
+    - name: "Webserver is down"
+      condition: event.url_check.status == "down"
+      actions:
+        - debug:
+           msg: "Webserver is down"
