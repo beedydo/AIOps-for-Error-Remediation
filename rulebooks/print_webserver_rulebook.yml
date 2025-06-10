@@ -24,7 +24,7 @@
       condition:
         all:
           - event.url_check.status == 'down'
-          - event.url_check.error_msg is defined
+        #  - event.url_check.error_msg is defined
       action:
         run_job_template:
           name: "2_Fix_Webserver"
