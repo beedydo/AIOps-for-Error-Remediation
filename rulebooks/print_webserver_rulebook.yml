@@ -18,5 +18,5 @@
       condition: event.url_check.status == "down"
       action:
         run_job_template:
-          name: "Demo-Job-Template"
+          name: "2_Fix_Webserver"
           organization: "Default"
