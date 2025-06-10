@@ -1,6 +1,6 @@
 ---
 - name: "Make sure the webserver is up and running"
-  hosts: localhost
+  hosts: aiops.demo.vm
   sources:
     - ansible.eda.url_check:
         urls:
