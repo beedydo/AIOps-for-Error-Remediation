@@ -10,13 +10,13 @@
   rules:
     - name: "Webserver is up"
       condition: event.url_check.status == "up"
-      actions:
+      action:
         - debug:
             msg: "Webserver is up"
 
     - name: "Webserver service is down"
       condition: event.url_check.status == "down"
-      actions:
+      action:
         - run_job_template:
             name: Demo-Job-Template
             organization: Default
