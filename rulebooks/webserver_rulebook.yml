@@ -26,7 +26,8 @@
         and event.url_check.error_msg is defined
       action:
         run_job_template:
-          name: "website_service_down.yml"
+          name: "2) Fix Webserver"
+          organization: Default
 
     - name: "Webserver is down index missing"
       condition: >
@@ -34,4 +35,5 @@
         and event.url_check.status_code == 404
       action:
         run_job_template:
-          name: "website_index_down.yml"
+          name: "2) Fix Webserver"
+          organization: Default
