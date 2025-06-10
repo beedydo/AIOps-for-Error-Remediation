@@ -21,9 +21,10 @@
            msg: "Webserver is down"
 
     - name: "Webserver service is down"
-      condition: >
-        event.url_check.status == 'down'
-        and event.url_check.error_msg is defined
+      condition:
+        all:
+          - event.url_check.status == 'down'
+          - event.url_check.error_msg is defined
       action:
         run_job_template:
           name: "2) Fix Webserver"
