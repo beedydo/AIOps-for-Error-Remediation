@@ -14,12 +14,12 @@
         - debug:
             msg: "Webserver is up"
 
-    - name: "Webserver service is down"
-      condition: event.url_check.status == 'down'
+#    - name: "Webserver service is down"
+#      condition: event.url_check.status == 'down'
         #all:
         #  - event.url_check.status == 'down'
         #  - event.url_check.error_msg is defined
-      actions:
-        run_job_template:
-          name: Demo-Job-Template
-          organization: Default
+#      actions:
+#        run_job_template:
+#          name: Demo-Job-Template
+#          organization: Default
