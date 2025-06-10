@@ -25,7 +25,7 @@
         #all:
         #  - event.url_check.status == 'down'
         #  - event.url_check.error_msg is defined
-      action:
+      actions:
         run_job_template:
           name: Demo-Job-Template
           organization: Default
