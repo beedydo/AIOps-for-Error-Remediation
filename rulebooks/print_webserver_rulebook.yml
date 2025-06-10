@@ -20,7 +20,7 @@
         - debug:
           msg: "Webserver is down"
 
-    - name: "Webserver is down"
+    - name: "Remediating webserver"
       condition: event.url_check.status == "down"
       action:
         run_job_template:
