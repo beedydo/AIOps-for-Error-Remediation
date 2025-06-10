@@ -1,6 +1,6 @@
 ---
 - name: Restore HTTPD Service
-  hosts: "{{ target_host }}"
+  hosts: webservers
   become: yes
   vars:
     max_retries: 3
