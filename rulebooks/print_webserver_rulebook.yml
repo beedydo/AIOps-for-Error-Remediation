@@ -8,11 +8,11 @@
         delay: 10
 
   rules:
-    - name: "Webserver is up"
-      condition: event.url_check.status == "up"
-      action:
-        debug:
-          msg: "Webserver is up"
+#    - name: "Webserver is up"
+#      condition: event.url_check.status == "up"
+#      action:
+#        debug:
+#          msg: "Webserver is up"
 
     - name: "Webserver service is down"
       condition: event.url_check.status == "down"
