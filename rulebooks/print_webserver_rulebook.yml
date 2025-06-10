@@ -14,12 +14,6 @@
         debug:
           msg: "Webserver is up"
 
-    - name: "Webserver is down"
-      condition: event.url_check.status == "down"
-      actions:
-        - debug:
-          msg: "Webserver is down"
-
     - name: "Remediating webserver"
       condition: event.url_check.status == "down"
       action:
