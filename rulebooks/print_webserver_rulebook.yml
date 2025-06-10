@@ -18,7 +18,7 @@
       condition: event.url_check.status == "down"
       actions:
         - debug:
-           msg: "Webserver is down"
+            msg: "Webserver is down"
 
     - name: "Webserver service is down"
       condition: event.url_check.status == 'down'
