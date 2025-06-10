@@ -27,5 +27,5 @@
           - event.url_check.error_msg is defined
       action:
         run_job_template:
-          name: "2) Fix Webserver"
+          name: "2_Fix_Webserver"
           organization: Default
