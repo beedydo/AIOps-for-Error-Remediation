@@ -1,26 +1,26 @@
 ---
-- name: Resolve MongoDB Permission Denied Error
-  hosts: all
+- hosts: all
   become: true
   tasks:
-    - name: Get MongoDB data directory from config file
-      command: grep "dbPath:" /etc/mongod.conf | awk '{print $2}'
-      register: mongodb_datadir
-      changed_when: false
-
-    - name: Set the mongodb data directory fact
-      set_fact:
-        mongodb_datadir: "{{ mongodb_datadir.stdout | trim | sed 's/\"//g' }}"
-
-    - name: Change ownership of MongoDB data directory
-      file:
-        path: "{{ mongodb_datadir }}"
-        owner: mongod
-        group: mongod
-        recurse: yes
-      when: mongodb_datadir is defined and mongodb_datadir != ""
-
-    - name: Restart MongoDB service
+    - name: Stop the httpd service
       service:
-        name: mongod
-        state: restarted
+        name: httpd
+        state: stopped
+      ignore_errors: true
+
+    - name: Find process using port 80
+      shell: "ss -tulpn | grep ':80'"
+      register: port_80_process
+      ignore_errors: true
+
+    - name: Kill process using port 80
+      shell: "kill -9 {{ item.pid }}"
+      with_items: "{{ port_80_process.stdout_lines | default([]) | map('regex_search', '^.*pid=(\\d+).*$') | select() | list() | map('regex_search', '(\\d+)') | flatten }}"
+      when: port_80_process.stdout != ""
+      ignore_errors: true
+
+    - name: Start the httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: true
