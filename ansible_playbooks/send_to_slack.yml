@@ -1,0 +1,18 @@
+---
+- name: Send a Slack message via Ansible
+  hosts: localhost
+  vars:
+    slack_webhook_url: "https://hooks.slack.com/services/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"
+    slack_channel: "#aap-aiops-demo"
+    slack_username: "Ansible Bot"
+    slack_icon_url: "https://www.ansible.com/favicon.ico"
+    slack_message: "This is a test message from Ansible Automation Platform!"
+
+  tasks:
+    - name: Send message to Slack
+      community.general.slack:
+        url: "{{ slack_webhook_url }}"
+        channel: "{{ slack_channel }}"
+        username: "{{ slack_username }}"
+        icon_url: "{{ slack_icon_url }}"
+        msg: "{{ slack_message }}"
