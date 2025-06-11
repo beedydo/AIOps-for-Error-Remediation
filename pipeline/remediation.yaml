@@ -1,7 +1,26 @@
 ---
-- hosts: all
+- name: Resolve MongoDB Permission Denied Error
+  hosts: all
   become: true
   tasks:
-    - name: Install httpd
-      ansible.builtin.debug:
-        msg: "Hello"
+    - name: Get MongoDB data directory from config file
+      command: grep "dbPath:" /etc/mongod.conf | awk '{print $2}'
+      register: mongodb_datadir
+      changed_when: false
+
+    - name: Set the mongodb data directory fact
+      set_fact:
+        mongodb_datadir: "{{ mongodb_datadir.stdout | trim | sed 's/\"//g' }}"
+
+    - name: Change ownership of MongoDB data directory
+      file:
+        path: "{{ mongodb_datadir }}"
+        owner: mongod
+        group: mongod
+        recurse: yes
+      when: mongodb_datadir is defined and mongodb_datadir != ""
+
+    - name: Restart MongoDB service
+      service:
+        name: mongod
+        state: restarted
