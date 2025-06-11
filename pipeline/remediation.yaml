@@ -1,26 +1,13 @@
 ---
-- hosts: all
+- name: Remediate Apache HTTP Server Failure
+  hosts: all
   become: true
   tasks:
-    - name: Stop the httpd service
+    - name: Stop any service using port 80
+      shell: "fuser -k 80/tcp"
+      ignore_errors: true
+
+    - name: Restart httpd service
       service:
         name: httpd
-        state: stopped
-      ignore_errors: true
-
-    - name: Find process using port 80
-      shell: "ss -tulpn | grep ':80'"
-      register: port_80_process
-      ignore_errors: true
-
-    - name: Kill process using port 80
-      shell: "kill -9 {{ item.pid }}"
-      with_items: "{{ port_80_process.stdout_lines | default([]) | map('regex_search', '^.*pid=(\\d+).*$') | select() | list() | map('regex_search', '(\\d+)') | flatten }}"
-      when: port_80_process.stdout != ""
-      ignore_errors: true
-
-    - name: Start the httpd service
-      service:
-        name: httpd
-        state: started
-        enabled: true
+        state: restarted
