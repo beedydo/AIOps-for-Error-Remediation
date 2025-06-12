@@ -10,6 +10,7 @@
       ansible.builtin.service:
         name: httpd
         state: stopped
+        enabled: false
 
     - name: Block port 80
       ansible.posix.firewalld:
