@@ -1,13 +1,24 @@
 ---
-- name: Remediate Apache HTTP Server Failure
+- name: Ensure httpd service is running and enabled
   hosts: all
   become: true
   tasks:
-    - name: Stop any service using port 80
-      shell: "fuser -k 80/tcp"
-      ignore_errors: true
-
-    - name: Restart httpd service
-      service:
+    - name: Start and enable httpd service
+      systemd:
         name: httpd
-        state: restarted
+        state: started
+        enabled: true
+
+    - name: Allow http service through the firewall
+      firewalld:
+        service: http
+        permanent: true
+        state: enabled
+      notify:
+        - reload firewall
+
+  handlers:
+    - name: reload firewall
+      service:
+        name: firewalld
+        state: reloaded
