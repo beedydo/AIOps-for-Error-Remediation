@@ -1,10 +1,10 @@
 ---
-- name: Ensure Apache is running
+- name: Ensure httpd service is running and enabled
   hosts: all
   become: true
   tasks:
     - name: Start and enable httpd service
-      service:
+      systemd:
         name: httpd
         state: started
-        enabled: true
+        enabled: yes
