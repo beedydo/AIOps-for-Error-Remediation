@@ -56,10 +56,10 @@
           WEBSERVER DIAGNOSTIC REPORT
           ============================
           Service Status: {{ ansible_facts.services[webserver_service].state | default('Not installed') }}
-          Port {{ check_port }} Listeners: {{ port_status.stdout | default('None') }}
-          Firewall Status: {{ firewall_status.stdout | default('Blocked') }}
-          SELinux Mode: {{ selinux_status.stdout }}
-          DNS Resolution: {{ dns_check.stdout | default('Failed') }}
-          System Load: {{ ansible_facts.loadavg }}
-          Memory Usage: {{ ansible_facts.memtotal_mb|int - ansible_facts.memfree_mb|int }}MB/{{ ansible_facts.memtotal_mb }}MB
+          Port {{ check_port }} Listeners: {{ port_status.stdout | default('None') | trim }}
+          Firewall Status: {{ firewall_status.stdout | default('Blocked') | trim }}
+          SELinux Mode: {{ selinux_status.stdout | trim }}
+          DNS Resolution: {{ dns_check.stdout | default('Failed') | trim }}
+          System Load: 1m={{ "%.2f" | format(ansible_facts.loadavg.1) }}, 5m={{ "%.2f" | format(ansible_facts.loadavg.5) }}, 15m={{ "%.2f" | format(ansible_facts.loadavg.15) }}
+          Memory Usage: {{ (ansible_facts.memtotal_mb - ansible_facts.memfree_mb) | int }}MB/{{ ansible_facts.memtotal_mb | int }}MB ({{ ((ansible_facts.memtotal_mb - ansible_facts.memfree_mb)/ansible_facts.memtotal_mb * 100) | int }}%)
       changed_when: false
