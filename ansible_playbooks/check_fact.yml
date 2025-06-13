@@ -1,0 +1,106 @@
+---
+- name: HTTP Server Health Check and Report
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  vars:
+    webserver_service: httpd
+    website_url: "http://localhost"
+    check_port: 80
+    log_path: /var/log/httpd/error_log
+
+  tasks:
+    - name: Check webserver package installation
+      ansible.builtin.package_facts:
+      register: pkg_facts
+      changed_when: false
+
+    - name: Set installation status
+      ansible.builtin.set_fact:
+        installed: "{{ webserver_service in ansible_facts.packages }}"
+
+    - name: Gather service status
+      ansible.builtin.service_facts:
+
+    - name: Check port availability
+      ansible.builtin.wait_for:
+        port: "{{ check_port }}"
+        timeout: 1
+      register: port_check
+      ignore_errors: yes
+
+    - name: Check firewall status
+      ansible.builtin.service:
+        name: firewalld
+      register: firewall_service
+
+    - name: Get firewall rules
+      ansible.builtin.command: firewall-cmd --list-all
+      register: firewall_rules
+      when: firewall_service.status == 'enabled'
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Check SELinux status
+      ansible.posix.selinux:
+      register: selinux_status
+      changed_when: false
+
+    - name: Test HTTP connectivity
+      ansible.builtin.uri:
+        url: "{{ website_url }}"
+        method: GET
+        status_code: 200
+      register: http_test
+      ignore_errors: yes
+
+    - name: Check Apache configuration
+      ansible.builtin.command: apachectl -t
+      register: apache_config
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Collect error logs
+      ansible.builtin.slurp:
+        src: "{{ log_path }}"
+      register: log_content
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Generate health report
+      ansible.builtin.debug:
+        msg: |
+          HTTP SERVER HEALTH REPORT
+          =========================
+          [Basic Information]
+          - Hostname: {{ ansible_facts.hostname }}
+          - OS: {{ ansible_facts.distribution }} {{ ansible_facts.distribution_version }}
+
+          [Web Server Status]
+          - Installed: {{ installed | ternary('Yes', 'No') }}
+          - Service Status: {{ ansible_facts.services[webserver_service].state | default('Not running') | upper }}
+          - Listening on Port {{ check_port }}: {{ port_check is success | ternary('Yes', 'No') }}
+
+          [Security Configuration]
+          - Firewall Status: {{ firewall_service.status | upper }}
+          - SELinux Mode: {{ selinux_status.mode | upper }}
+          {% if firewall_service.status == 'enabled' %}
+          - Firewall Rules:
+            {{ firewall_rules.stdout | indent(4) }}
+          {% endif %}
+
+          [Connectivity]
+          - HTTP Response: {{ http_test.status | default('Unreachable') }}
+          - Config Valid: {{ apache_config is success | ternary('Valid', 'Invalid') }}
+
+          [System Resources]
+          - Load Average (1/5/15m): {{ "%.2f" }}/{{ "%.2f" }}/{{ "%.2f" | format(ansible_facts.loadavg.1, ansible_facts.loadavg.5, ansible_facts.loadavg.15) }}
+          - Memory Usage: {{ (ansible_facts.memtotal_mb - ansible_facts.memfree_mb)|int }}MB/{{ ansible_facts.memtotal_mb|int }}MB
+
+          [Recent Errors]
+          {% if log_content.content is defined %}
+          {{ (log_content.content | b64decode).split('\n')[-10:] | join('\n') | indent(4) }}
+          {% else %}
+            No error logs found
+          {% endif %}

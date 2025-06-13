@@ -55,22 +55,10 @@
         msg: |
           WEBSERVER DIAGNOSTIC REPORT
           ============================
-          [Service Status]
-          {{ ansible_facts.services[webserver_service].state | default('Not installed') | upper }}
-          
-          [Port {{ check_port }} Listeners]
-          {{ port_status.stdout | trim | default('No listeners found') }}
-          
-          [Firewall Configuration]
-          {{ firewall_status.stdout | trim | default('No http/80 rules found') }}
-          
-          [SELinux Mode]
-          {{ selinux_status.stdout | trim }}
-          
-          [HTTP Response]
-          {{ http_check.stdout | trim | default('No response') }}
-          
-          [System Resources]
-          Load Avg: {{ ansible_facts.loadavg | json_query('[].`%.2f`') }}
-          Memory: {{ (ansible_facts.memtotal_mb - ansible_facts.memfree_mb)|int }}MB/{{ ansible_facts.memtotal_mb|int }}MB
+          Service Status: {{ ansible_facts.services[webserver_service].state | default('Not installed') }}
+          Port {{ check_port }} Listeners: {{ port_status.stdout | default('None') | trim }}
+          Firewall Status: {{ firewall_status.stdout | default('Unknown') | trim }}
+          SELinux Mode: {{ selinux_status.stdout | trim }}
+          DNS Resolution: {{ dns_check.stdout | default('Failed') | trim }}
       changed_when: false
+      
