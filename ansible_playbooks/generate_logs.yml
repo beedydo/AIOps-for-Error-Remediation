@@ -27,14 +27,14 @@
         ss -tuln | grep ":{{ check_port }} " || true
       register: port_status
       changed_when: false
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Check firewall status for port 80
       ansible.builtin.shell: |
         firewall-cmd --list-ports | grep "{{ check_port}}/tcp" || true
       register: firewall_status
       changed_when: false
-      ignore_errors: yes
+      ignore_errors: true
 
     # Additional connectivity factors
     - name: Check SELinux status
@@ -47,7 +47,7 @@
         dig +short {{ website_url }} || nslookup {{ website_url }} | grep Address
       register: dns_check
       changed_when: false
-      ignore_errors: yes
+      ignore_errors: true
 
     # Aggregated report
     - name: Show diagnostic summary
