@@ -1,0 +1,64 @@
+---
+- name: Webserver Diagnostic Toolkit
+  hosts: all
+  become: true
+  vars:
+    webserver_service: "httpd"
+    website_url: "http://52.221.254.181"
+    check_port: 80
+
+  tasks:
+    # System and service status checks
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+      register: service_status
+      changed_when: false
+
+    - name: Check webserver service status
+      ansible.builtin.debug:
+        msg: "{{ service_status.ansible_facts.services[webserver_service].state }}"
+      register: service_output
+      changed_when: false
+
+    # Network and port diagnostics
+    - name: Check port 80 status
+      ansible.builtin.shell: |
+        ss -tuln | grep ":{{ check_port }} " || true
+      register: port_status
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Check firewall status for port 80
+      ansible.builtin.shell: |
+        firewall-cmd --list-ports | grep "{{ check_port}}/tcp" || true
+      register: firewall_status
+      changed_when: false
+      ignore_errors: yes
+
+    # Additional connectivity factors
+    - name: Check SELinux status
+      ansible.builtin.shell: getenforce
+      register: selinux_status
+      changed_when: false
+
+    - name: Verify DNS resolution
+      ansible.builtin.shell: |
+        dig +short {{ website_url }} || nslookup {{ website_url }} | grep Address
+      register: dns_check
+      changed_when: false
+      ignore_errors: yes
+
+    # Aggregated report
+    - name: Show diagnostic summary
+      ansible.builtin.debug:
+        msg: |
+          WEBSERVER DIAGNOSTIC REPORT
+          ============================
+          Service Status: {{ service_output.msg }}
+          Port {{ check_port }} Listeners: {{ port_status.stdout | default('None') }}
+          Firewall Status: {{ firewall_status.stdout | default('Blocked') }}
+          SELinux Mode: {{ selinux_status.stdout }}
+          DNS Resolution: {{ dns_check.stdout | default('Failed') }}
+          System Load: {{ ansible_facts.loadavg }}
+          Memory Usage: {{ ansible_facts.memtotal_mb|int - ansible_facts.memfree_mb|int }}MB/{{ ansible_facts.memtotal_mb }}MB
+      changed_when: false
