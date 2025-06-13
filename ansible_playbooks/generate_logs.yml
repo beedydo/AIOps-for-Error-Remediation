@@ -16,8 +16,9 @@
 
     - name: Check webserver service status
       ansible.builtin.debug:
-        msg: "{{ service_status.ansible_facts.services[webserver_service].state }}"
-      register: service_output
+        msg: |
+          Service Status: {{ ansible_facts.services[webserver_service].state | default('Not installed') }}
+          Service Enabled: {{ ansible_facts.services[webserver_service].status | default('N/A') }}
       changed_when: false
 
     # Network and port diagnostics
