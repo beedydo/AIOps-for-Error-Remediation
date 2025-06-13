@@ -42,11 +42,6 @@
       changed_when: false
       ignore_errors: yes
 
-    - name: Check SELinux status
-      ansible.posix.selinux:
-      register: selinux_status
-      changed_when: false
-
     - name: Test HTTP connectivity
       ansible.builtin.uri:
         url: "{{ website_url }}"
@@ -84,7 +79,6 @@
 
           [Security Configuration]
           - Firewall Status: {{ firewall_service.status | upper }}
-          - SELinux Mode: {{ selinux_status.mode | upper }}
           {% if firewall_service.status == 'enabled' %}
           - Firewall Rules:
             {{ firewall_rules.stdout | indent(4) }}
