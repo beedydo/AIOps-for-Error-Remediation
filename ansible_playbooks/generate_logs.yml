@@ -55,7 +55,7 @@
         msg: |
           WEBSERVER DIAGNOSTIC REPORT
           ============================
-          Service Status: {{ service_output.msg }}
+          Service Status: {{ ansible_facts.services[webserver_service].state | default('Not installed') }}
           Port {{ check_port }} Listeners: {{ port_status.stdout | default('None') }}
           Firewall Status: {{ firewall_status.stdout | default('Blocked') }}
           SELinux Mode: {{ selinux_status.stdout }}
