@@ -55,10 +55,13 @@
         msg: |
           WEBSERVER DIAGNOSTIC REPORT
           ============================
-          Service Status: {{ ansible_facts.services[webserver_service].state | default('Not installed') }}
-          Port {{ check_port }} Listeners: {{ port_status.stdout | default('None') | trim }}
-          Firewall Status: {{ firewall_status.stdout | default('Blocked') | trim }}
-          SELinux Mode: {{ selinux_status.stdout | trim }}
-          DNS Resolution: {{ dns_check.stdout | default('Failed') | trim }}
+          Service Installation: {{ service_install.stdout | default('Unknown') | trim }}
+          Service Status: {{ service_state.stdout | default('Not running') | trim }}
+          Port {{ check_port }} Status:
+            - Listeners: {{ port_status.stdout | default('None') | trim }}
+            - Firewall: {{ firewall_status.stdout | default('Blocked') | trim }}
+          Security Context:
+            - SELinux: {{ selinux_status.stdout | default('Unknown') | trim }}
+          Network Validation:
+            - DNS Resolution: {{ dns_check.stdout | default('Failed') | trim }}
       changed_when: false
-      
