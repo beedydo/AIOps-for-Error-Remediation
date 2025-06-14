@@ -88,6 +88,3 @@
           - HTTP Response: {{ http_test.status | default('Unreachable') }}
           - Config Valid: {{ apache_config is success | ternary('Valid', 'Invalid') }}
 
-          [System Resources]
-          - Load Average (1/5/15m): {{ "%.2f" }}/{{ "%.2f" }}/{{ "%.2f" | format(ansible_facts.loadavg.1, ansible_facts.loadavg.5, ansible_facts.loadavg.15) }}
-          - Memory Usage: {{ (ansible_facts.memtotal_mb - ansible_facts.memfree_mb)|int }}MB/{{ ansible_facts.memtotal_mb|int }}MB
