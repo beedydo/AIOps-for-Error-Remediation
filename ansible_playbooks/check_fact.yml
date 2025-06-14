@@ -74,7 +74,13 @@
 
           [Web Server Status]
           - Installed: {{ installed | ternary('Yes', 'No') }}
-          - Service Status: {{ ansible_facts.services[webserver_service].state | default('Not running') | upper }}
+          - Service Status: {{ ansible_facts.services[webserver_service].state | default('Unknown') | upper }}
           - Listening on Port {{ check_port }}: {{ port_check is success | ternary('Yes', 'No') }}
 
- 
+          [Security Configuration]
+          - Firewall Status: {{ firewall_service.status | upper }}
+          {% if firewall_service.status == 'enabled' %}
+          - Firewall Rules:
+            {{ firewall_rules.stdout | indent(4) }}
+          {% endif %}
+
