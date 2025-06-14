@@ -84,3 +84,7 @@
             {{ firewall_rules.stdout | indent(4) }}
           {% endif %}
 
+          [Connectivity]
+          - HTTP Response: {{ http_test.status | default('Unreachable') }}
+          - Config Valid: {{ apache_config is success | ternary('Valid', 'Invalid') }}
+
