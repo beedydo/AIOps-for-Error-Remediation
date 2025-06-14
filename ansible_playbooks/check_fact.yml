@@ -72,4 +72,9 @@
           - Hostname: {{ ansible_facts.hostname }}
           - OS: {{ ansible_facts.distribution }} {{ ansible_facts.distribution_version }}
 
+          [Web Server Status]
+          - Installed: {{ installed | ternary('Yes', 'No') }}
+          - Service Status: {{ ansible_facts.services[webserver_service].state | default('Not running') | upper }}
+          - Listening on Port {{ check_port }}: {{ port_check is success | ternary('Yes', 'No') }}
 
+ 
