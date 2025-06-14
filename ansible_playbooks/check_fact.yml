@@ -91,10 +91,3 @@
           [System Resources]
           - Load Average (1/5/15m): {{ "%.2f" }}/{{ "%.2f" }}/{{ "%.2f" | format(ansible_facts.loadavg.1, ansible_facts.loadavg.5, ansible_facts.loadavg.15) }}
           - Memory Usage: {{ (ansible_facts.memtotal_mb - ansible_facts.memfree_mb)|int }}MB/{{ ansible_facts.memtotal_mb|int }}MB
-
-          [Recent Errors]
-          {% if log_content.content is defined %}
-          {{ (log_content.content | b64decode).split('\n')[-10:] | join('\n') | indent(4) }}
-          {% else %}
-            No error logs found
-          {% endif %}
