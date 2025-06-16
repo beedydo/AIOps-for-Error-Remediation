@@ -11,6 +11,15 @@
     log_path: /var/log/httpd/error_log
 
   tasks:
+    # Install required packages
+    - name: Install firewalld and net-tools
+      ansible.builtin.dnf:
+        name:
+          - firewalld
+          - net-tools
+        state: present
+      when: ansible_os_family == 'RedHat'
+
     - name: Check webserver package installation
       ansible.builtin.package_facts:
       register: pkg_facts
@@ -28,7 +37,7 @@
         port: "{{ check_port }}"
         timeout: 1
       register: port_check
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Check firewall status
       ansible.builtin.service:
@@ -40,7 +49,7 @@
       register: firewall_rules
       when: firewall_service.status == 'enabled'
       changed_when: false
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Test HTTP connectivity
       ansible.builtin.uri:
@@ -48,20 +57,20 @@
         method: GET
         status_code: 200
       register: http_test
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Check Apache configuration
       ansible.builtin.command: apachectl -t
       register: apache_config
       changed_when: false
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Collect error logs
       ansible.builtin.slurp:
         src: "{{ log_path }}"
       register: log_content
       changed_when: false
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Generate health report
       ansible.builtin.debug:
@@ -78,7 +87,7 @@
           - Listening on Port {{ check_port }}: {{ port_check is success | ternary('Yes', 'No') }}
 
           [Security Configuration]
-          - Firewall Status: {{ firewall_service.status | upper }}
+        #  - Firewall Status: {{ firewall_service.status | upper }}
           {% if firewall_service.status == 'enabled' %}
           - Firewall Rules:
             {{ firewall_rules.stdout | indent(4) }}
