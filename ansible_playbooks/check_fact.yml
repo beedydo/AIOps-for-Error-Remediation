@@ -83,6 +83,7 @@
           [Web Server Status]
           - Installed: {{ installed | ternary('Yes', 'No') }}
           - Service Status: {{ ansible_facts.services['httpd.service'].state | default('Unknown') | upper }}
+          - Service Status: {{ ansible_facts.services['{{ webserver_service }}.service'].state | default('Unknown') | upper }}
           - Listening on Port {{ check_port }}: {{ port_check is success | ternary('Yes', 'No') }}
 
           [Security Configuration]
