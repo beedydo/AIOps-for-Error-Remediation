@@ -19,23 +19,26 @@
               "outputs": [
                 "service_error_down.txt"
               ],
-              "env_vars": [
-                {
-                  "env_var": "AWS_ACCESS_KEY_ID"
-                },
-                {
-                  "env_var": "AWS_SECRET_ACCESS_KEY"
-                },
-                {
-                  "env_var": "AWS_DEFAULT_REGION"
-                },
-                {
-                  "env_var": "AWS_S3_ENDPOINT"
-                }
-              ],
+              "env_vars": [],
               "kubernetes_pod_annotations": [],
               "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
+              "kubernetes_secrets": [
+                {
+                  "env_var": "AWS_ACCESS_KEY_ID",
+                  "name": "secret-mmi2wv",
+                  "key": "AWS_ACCESS_KEY_ID"
+                },
+                {
+                  "env_var": "AWS_SECRET_ACCESS_KEY",
+                  "name": "secret-mmi2wv",
+                  "key": "AWS_SECRET_ACCESS_KEY"
+                },
+                {
+                  "env_var": "AWS_S3_ENDPOINT",
+                  "name": "secret-mmi2wv",
+                  "key": "AWS_S3_ENDPOINT"
+                }
+              ],
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
@@ -85,25 +88,31 @@
           "op": "execute-notebook-node",
           "app_data": {
             "component_parameters": {
-              "dependencies": [
+              "dependencies": [],
+              "include_subdirectories": false,
+              "outputs": [
                 "report.json"
               ],
-              "include_subdirectories": false,
-              "outputs": [],
-              "env_vars": [
-                {
-                  "env_var": "AWS_S3_ENDPOINT"
-                },
-                {
-                  "env_var": "AWS_ACCESS_KEY_ID"
-                },
-                {
-                  "env_var": "AWS_SECRET_ACCESS_KEY"
-                }
-              ],
+              "env_vars": [],
               "kubernetes_pod_annotations": [],
               "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
+              "kubernetes_secrets": [
+                {
+                  "env_var": "AWS_ACCESS_KEY_ID",
+                  "name": "secret-mmi2wv",
+                  "key": "AWS_ACCESS_KEY_ID"
+                },
+                {
+                  "env_var": "AWS_SECRET_ACCESS_KEY",
+                  "name": "secret-mmi2wv",
+                  "key": "AWS_SECRET_ACCESS_KEY"
+                },
+                {
+                  "env_var": "AWS_S3_ENDPOINT",
+                  "name": "secret-mmi2wv",
+                  "key": "AWS_S3_ENDPOINT"
+                }
+              ],
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
@@ -159,30 +168,36 @@
           "type": "execution_node",
           "op": "execute-notebook-node",
           "app_data": {
-            "label": "",
             "component_parameters": {
               "dependencies": [],
               "include_subdirectories": false,
               "outputs": [],
-              "env_vars": [
-                {
-                  "env_var": "AWS_S3_ENDPOINT"
-                },
-                {
-                  "env_var": "AWS_ACCESS_KEY_ID"
-                },
-                {
-                  "env_var": "AWS_SECRET_ACCESS_KEY"
-                }
-              ],
+              "env_vars": [],
               "kubernetes_pod_annotations": [],
               "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
+              "kubernetes_secrets": [
+                {
+                  "env_var": "AWS_ACCESS_KEY_ID",
+                  "name": "secret-mmi2wv",
+                  "key": "AWS_ACCESS_KEY_ID"
+                },
+                {
+                  "env_var": "AWS_SECRET_ACCESS_KEY",
+                  "name": "secret-mmi2wv",
+                  "key": "AWS_SECRET_ACCESS_KEY"
+                },
+                {
+                  "env_var": "AWS_S3_ENDPOINT",
+                  "name": "secret-mmi2wv",
+                  "key": "AWS_S3_ENDPOINT"
+                }
+              ],
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
               "filename": "3_generate_playbook.ipynb"
             },
+            "label": "",
             "ui_data": {
               "label": "3_generate_playbook.ipynb",
               "image": "/notebook/aiops/demo/static/elyra/notebook.svg",
