@@ -45,7 +45,7 @@
       register: firewall_service
 
     - name: Get firewall rules
-      ansible.builtin.command: firewall-cmd --list-all
+      ansible.builtin.command: sudo firewall-cmd --list-all
       register: firewall_rules
       when: firewall_service.status == 'enabled'
       changed_when: false
