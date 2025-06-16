@@ -87,8 +87,11 @@
           - Listening on Port {{ check_port }}: {{ port_check is success | ternary('Yes', 'No') }}
 
           [Security Configuration]
-          - Firewall Status: {{ firewall_service.status | upper }}
 
+          {% if firewall_service.status == 'enabled' %}
+          - Firewall Rules:
+            {{ firewall_rules.stdout | indent(4) }}
+          {% endif %}
 
           [Connectivity]
           - HTTP Response: {{ http_test.status | default('Unreachable') }}
