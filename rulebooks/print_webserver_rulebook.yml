@@ -18,5 +18,5 @@
       condition: event.url_check.status == "down"
       action:
         run_job_template:
-          name: "2_Fix_Webserver"
+          name: "check_fact" #Replace with: trigger fact gathering
           organization: "Default"
