@@ -1,0 +1,4 @@
+{
+    "affected_host": "server1",
+    "affected_service": "httpd"
+}
