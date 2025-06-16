@@ -47,7 +47,6 @@
     - name: Get firewall rules
       ansible.builtin.command: sudo firewall-cmd --list-all
       register: firewall_rules
-      when: firewall_service.status == 'enabled'
       changed_when: false
       ignore_errors: true
 
@@ -83,7 +82,7 @@
 
           [Web Server Status]
           - Installed: {{ installed | ternary('Yes', 'No') }}
-          - Service Status: {{ ansible_facts.services['webserver_service'].state | default('Unknown') | upper }}
+          - Service Status: {{ ansible_facts.services['webserver_service.service'].state | default('Unknown') | upper }}
           - Listening on Port {{ check_port }}: {{ port_check is success | ternary('Yes', 'No') }}
 
           [Security Configuration]
