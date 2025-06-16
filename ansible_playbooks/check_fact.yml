@@ -78,7 +78,7 @@
           HTTP SERVER HEALTH REPORT
           =========================
           [Basic Information]
-          - Hostname: {{ ansible_facts.hostname }}
+          - Hostname: {{ ansible_facts.fqdn }}
           - OS: {{ ansible_facts.distribution }} {{ ansible_facts.distribution_version }}
 
           [Web Server Status]
