@@ -1,0 +1,1 @@
+HTTP SERVER HEALTH REPORT\n=========================\n[Basic Information]\n- Hostname: aiops\n- OS: RedHat 9.5\n\n[Web Server Status]\n- Installed: Yes\n- Service Status: UNKNOWN\n- Listening on Port 80: Yes\n\n[Security Configuration]\n\n\n[Connectivity]\n- HTTP Response: 200\n- Config Valid: Valid\n
