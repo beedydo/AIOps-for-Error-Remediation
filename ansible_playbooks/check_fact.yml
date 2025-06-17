@@ -112,7 +112,7 @@
         dest: "/tmp/{{ object_name }}"
 
     - name: Upload the file to MinIO bucket using S3 API
-      community.aws.s3:
+      amazon.aws.s3_bucket:
         bucket: "{{ bucket_name }}"
         object: "{{ object_name }}"
         src: "/tmp/{{ object_name }}"
