@@ -78,7 +78,7 @@
       ignore_errors: true
 
     - name: Generate health report
-      ansible.builtin.debug:
+      ansible.builtin.set_fact:
         health_report: |
           HTTP SERVER HEALTH REPORT
           =========================
@@ -101,7 +101,10 @@
           [Connectivity]
           - HTTP Response: {{ http_test.status | default('Unreachable') }}
           - Config Valid: {{ apache_config is success | ternary('Valid', 'Invalid') }}
-        register: health_report
+
+    - name: Display health report
+      ansible.builtin.debug:
+        msg: "{{ health_report }}"
 
     - name: Create a temporary file with the message
       ansible.builtin.copy:
