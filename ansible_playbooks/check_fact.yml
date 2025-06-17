@@ -113,7 +113,7 @@
 
     - name: Upload the file to MinIO bucket using S3 API
       amazon.aws.s3_bucket:
-        bucket: "{{ bucket_name }}"
+        name: "{{ bucket_name }}"
         object: "{{ object_name }}"
         src: "/tmp/{{ object_name }}"
         mode: put
