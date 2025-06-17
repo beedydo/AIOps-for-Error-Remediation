@@ -111,6 +111,19 @@
         content: "{{ health_report }}"
         dest: "/tmp/{{ object_name }}"
 
+    - name: Install Python dependencies for MinIO upload
+      ansible.builtin.dnf:
+        name: python3-pip
+        state: present
+      when: ansible_os_family == 'RedHat'
+
+    - name: Install boto3 and botocore
+      ansible.builtin.pip:
+        name:
+          - boto3>=1.34.0
+          - botocore>=1.34.0
+        executable: /usr/bin/pip3
+
     - name: Upload the file to MinIO bucket using S3 API
       amazon.aws.s3_object:
         bucket: "{{ bucket_name }}"
