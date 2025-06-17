@@ -133,6 +133,8 @@
         access_key: "{{ access_key }}"
         secret_key: "{{ secret_key }}"
         endpoint_url: "{{ minio_endpoint }}"
-        ceph: true  # Required for MinIO compatibility
+        #ceph: true  # Required for MinIO compatibility
+        rgw: true  # Use rgw instead of ceph for MinIO
+        encrypt: false  # Disable server-side encryption
         overwrite: always
         validate_certs: false
