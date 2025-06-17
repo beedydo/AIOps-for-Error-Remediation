@@ -111,14 +111,13 @@
         content: "{{ health_report }}"
         dest: "/tmp/{{ object_name }}"
 
-    - name: Upload the file to MinIO bucket using API
-      ansible.builtin.uri:
-        url: "{{ minio_endpoint }}/{{ bucket_name }}/{{ object_name }}"
-        method: PUT
-        user: "{{ access_key }}"
-        password: "{{ secret_key }}"
-        force_basic_auth: true
-        body: "{{ health_report }}"
-        status_code: 200
-        headers:
-          Content-Type: text/plain
+    - name: Upload the file to MinIO bucket using S3 API
+      community.aws.s3:
+        bucket: "{{ bucket_name }}"
+        object: "{{ object_name }}"
+        src: "/tmp/{{ object_name }}"
+        mode: put
+        aws_access_key: "{{ access_key }}"
+        aws_secret_key: "{{ secret_key }}"
+        endpoint_url: "{{ minio_endpoint }}"
+        validate_certs: no
