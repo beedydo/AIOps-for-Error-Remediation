@@ -1,14 +1,20 @@
 ---
 - name: HTTP Server Health Check and Report
   hosts: all
-  become: yes
-  gather_facts: yes
+  become: true
+  gather_facts: true
 
   vars:
     webserver_service: httpd
     website_url: "http://localhost"
     check_port: 80
     log_path: /var/log/httpd/error_log
+
+    minio_endpoint: "http://minio-api-aiops.apps.cluster-hdmxf.hdmxf.sandbox689.opentlc.com"  # Replace with your MinIO endpoint
+    bucket_name: "logs"
+    object_name: "service_error_down.txt"
+    access_key: "minio"                   # Replace with your MinIO access key
+    secret_key: "minio123"                   # Replace with your MinIO secret key
 
   tasks:
     # Install required packages
@@ -95,3 +101,21 @@
           [Connectivity]
           - HTTP Response: {{ http_test.status | default('Unreachable') }}
           - Config Valid: {{ apache_config is success | ternary('Valid', 'Invalid') }}
+        register: health_report
+
+    - name: Create a temporary file with the message
+      ansible.builtin.copy:
+        content: "{{ health_report }}"
+        dest: "/tmp/{{ object_name }}"
+
+    - name: Upload the file to MinIO bucket using API
+      ansible.builtin.uri:
+        url: "{{ minio_endpoint }}/{{ bucket_name }}/{{ object_name }}"
+        method: PUT
+        user: "{{ access_key }}"
+        password: "{{ secret_key }}"
+        force_basic_auth: true
+        body: "{{ message }}"
+        status_code: 200
+        headers:
+          Content-Type: text/plain
