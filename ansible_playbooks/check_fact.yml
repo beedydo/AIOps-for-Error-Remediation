@@ -10,7 +10,7 @@
     check_port: 80
     log_path: /var/log/httpd/error_log
 
-    minio_endpoint: "http://minio-api-aiops.apps.cluster-hdmxf.hdmxf.sandbox689.opentlc.com"  # Replace with your MinIO endpoint
+    minio_endpoint: "http://minio-api-aiops.apps.cluster-hdmxf.hdmxf.sandbox689.opentlc.com:9000"  # Replace with your MinIO endpoint
     bucket_name: "logs"
     object_name: "service_error_down.txt"
     access_key: "minio"                   # Replace with your MinIO access key
