@@ -117,7 +117,9 @@
         object: "{{ object_name }}"
         src: "/tmp/{{ object_name }}"
         mode: put
-        aws_access_key: "{{ access_key }}"
-        aws_secret_key: "{{ secret_key }}"
+        access_key: "{{ access_key }}"
+        secret_key: "{{ secret_key }}"
         endpoint_url: "{{ minio_endpoint }}"
-        validate_certs: no
+        ceph: true  # Required for MinIO compatibility
+        overwrite: always
+        validate_certs: false
