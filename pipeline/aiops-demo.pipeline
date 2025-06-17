@@ -91,7 +91,7 @@
               "dependencies": [],
               "include_subdirectories": false,
               "outputs": [
-                "report.json"
+                "incident_report.txt"
               ],
               "env_vars": [],
               "kubernetes_pod_annotations": [],
@@ -164,7 +164,7 @@
           ]
         },
         {
-          "id": "9cb02356-51ac-4531-a60f-9c49556e1ea5",
+          "id": "e3ec44a2-b8f4-43b6-a41f-9982deab4c3d",
           "type": "execution_node",
           "op": "execute-notebook-node",
           "app_data": {
@@ -182,14 +182,14 @@
                   "key": "AWS_ACCESS_KEY_ID"
                 },
                 {
-                  "env_var": "AWS_SECRET_ACCESS_KEY",
-                  "name": "secret-mmi2wv",
-                  "key": "AWS_SECRET_ACCESS_KEY"
-                },
-                {
                   "env_var": "AWS_S3_ENDPOINT",
                   "name": "secret-mmi2wv",
                   "key": "AWS_S3_ENDPOINT"
+                },
+                {
+                  "env_var": "AWS_SECRET_ACCESS_KEY",
+                  "name": "secret-mmi2wv",
+                  "key": "AWS_SECRET_ACCESS_KEY"
                 }
               ],
               "kubernetes_shared_mem_size": {},
@@ -201,8 +201,8 @@
             "ui_data": {
               "label": "3_generate_playbook.ipynb",
               "image": "/notebook/aiops/demo/static/elyra/notebook.svg",
-              "x_pos": 437,
-              "y_pos": 526,
+              "x_pos": 370,
+              "y_pos": 485,
               "description": "Run notebook file"
             }
           },
@@ -220,7 +220,7 @@
               },
               "links": [
                 {
-                  "id": "9800fff3-0edc-425b-ad8d-9524a0b5570f",
+                  "id": "bad6e87c-9069-4cc9-94b6-16aca1131583",
                   "node_id_ref": "8dae83a5-2271-4882-abaf-c4f75d857e71",
                   "port_id_ref": "outPort"
                 }
@@ -253,11 +253,11 @@
           "name": "aiops-demo",
           "runtime": "Data Science Pipelines",
           "pipeline_defaults": {
+            "kubernetes_tolerations": [],
+            "kubernetes_pod_annotations": [],
             "kubernetes_shared_mem_size": {},
             "kubernetes_pod_labels": [],
             "mounted_volumes": [],
-            "kubernetes_tolerations": [],
-            "kubernetes_pod_annotations": [],
             "kubernetes_secrets": [],
             "env_vars": [],
             "runtime_image": "quay.io/modh/runtime-images@sha256:7211b5e103ce288d724f12ea77504a576192ca74ba3b35b3450e22f420b60a78"
