@@ -3,7 +3,7 @@
   hosts: webservers
   become: true
   gather_facts: false
- 
+
   tasks:
     - name: Display debug message
       ansible.builtin.debug:
@@ -14,4 +14,3 @@
         remore_src: true
         src: /tmp/index.html
         dest: /var/www/html
-        
