@@ -61,4 +61,3 @@
           SELinux Mode: {{ selinux_status.stdout | trim }}
           DNS Resolution: {{ dns_check.stdout | default('Failed') | trim }}
       changed_when: false
-      
