@@ -26,11 +26,11 @@ The primary components are:
 
 The entire process is orchestrated as a seamless, automated workflow, as illustrated by the numbered steps in the diagram:
 
-1. Event Occurs
+**1. Event Occurs**
 
     An issue, such as a service failure or an error, occurs on the Web Server.
 
-2. Event Detection
+**2. Event Detection**
 
     Event-Driven Ansible (EDA) is configured with rulebooks to monitor the Web Server. It detects the event in real-time.
 
