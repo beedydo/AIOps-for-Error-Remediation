@@ -43,8 +43,8 @@ Upon receiving the event trigger from EDA, the Ansible Automation Platform (AAP)
 **4. Red Hat OpenShift AI Pipeline**
 We can trigger the Red Hat OpenShift AI pipeline now that we have the raw error logs of the Web Server, the pipeline performs the following steps:
 - **4.1: Retrieve Raw Error Log**: The pipeline retrieves the raw error log from the S3 bucket.
-- **4.2: Generate Incident Report**: Using a trained model, the pipeline analyzes the log data to understand the root cause and generates a human-readable incident report.
-- **4.3: Generate Ansible Playbook**: Based on its analysis, the AI generates a new, tailored Ansible Playbook designed to remediate the specific issue that was detected.
+- **4.2: Generate Incident Report**: Using a locally deployed LLM model on OpenShift AI, the pipeline analyzes the log data to understand the root cause and generates a human-readable incident report.
+- **4.3: Generate Ansible Playbook**: Based on its analysis, the LLM model generates a new, tailored Ansible Playbook designed to remediate the specific issue that was detected.
 
 ### Demo
 
