@@ -15,3 +15,11 @@ In modern IT environments, responding to system failures quickly and effectively
 ### Architecture
 
 ![Architecture Diagram](/assets/architecture_diagram.png)
+
+The primary components are:
+
+- **Web Server**: The monitored application host where events originate.
+- **Event-Driven Ansible (EDA)**: Listens for events from the Web Server. EDA rulebooks define the conditions under which an action should be taken.
+- **Ansible Automation Platform (AAP)**: The central automation engine that executes tasks based on triggers from EDA.
+- **Amazon S3 (or similar object storage)**: Used as a central repository for storing raw logs, incident reports, and generated playbooks.
+- **Red Hat OpenShift AI**: A platform for building, deploying, and managing AI/ML models. In this architecture, it runs a pipeline to process event data and generate intelligent responses.
