@@ -1,0 +1,32 @@
+
+INCIDENT ID: AIOPS-20240328-00001
+DETECTED: 03/28/2024 11:59 AM
+SEVERITY: High
+STATUS: In Progress
+AFFECTED SERVICE: httpd
+AFFECTED HOST: aiops.demo.vm
+SUMMARY: Web server is not running
+
+ROOT CAUSE:
+The web server is not running on the affected host, aiops.demo.vm. The service status is INACTIVE, and it is not listening on port 80.
+
+REMEDIATION PLAYBOOK:
+1. Start the httpd service:
+   ```
+   systemctl start httpd
+   ```
+2. Enable the httpd service to start on boot:
+   ```
+   systemctl enable httpd
+   ```
+3. Check the service status to ensure it is running:
+   ```
+   systemctl status httpd
+   ```
+
+VALIDATION:
+After applying the remediation playbook, confirm the fix by checking the service status:
+```
+systemctl status httpd
+```
+If the service is running and listening on port 80, the issue has been resolved.

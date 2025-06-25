@@ -1,0 +1,17 @@
+HTTP SERVER HEALTH REPORT
+=========================
+[Basic Information]
+- Hostname: aiops.demo.vm
+- OS: RedHat 9.5
+
+[Web Server Status]
+- Installed: Yes
+- Service Status: INACTIVE
+- Listening on Port 80: No
+
+[Security Configuration]
+
+
+[Connectivity]
+- HTTP Response: -1
+- Config Valid: Valid

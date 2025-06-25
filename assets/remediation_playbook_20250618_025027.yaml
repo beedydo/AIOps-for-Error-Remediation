@@ -1,0 +1,27 @@
+- name: Restore HTTPD
+  hosts: aiops.demo.vm
+  become: true
+  vars:
+    max_retries: 3
+    retry_delay: 10
+    service: httpd
+    port: 80
+  tasks:
+    - name: Start the httpd service
+      ansible.builtin.service:
+        name: "{{ service }}"
+        state: started
+        enabled: yes
+
+    - name: Check the service status
+      ansible.builtin.service:
+        name: "{{ service }}"
+        state: started
+      register: service_status
+
+    - name: Validate the service status
+      ansible.builtin.assert:
+        that:
+          - service_status.changed
+        fail_msg: "The service is not running after remediation."
+        success_msg: "The service is running."
