@@ -24,6 +24,9 @@ The primary components are:
 - **Amazon S3 (or similar object storage)**: Used as a central repository for storing raw logs, incident reports, and generated playbooks.
 - **Red Hat OpenShift AI**: A platform for managing the lifecycle of predictive and generative AI (gen AI) models, at scale, across hybrid cloud environments. In this architecture, it runs a pipeline to process event data and generate intelligent responses.
 
-### Pipeline Demo
+### Demo
 
-![pipeline video](/assets/pipeline_demo.mkv)
+#### EDA Demo
+[TODO]
+#### Pipeline Demo
+[TODO]
