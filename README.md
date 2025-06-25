@@ -36,9 +36,8 @@ The entire process is orchestrated as a seamless, automated workflow, as illustr
 
 3. Task Execution by AAP
    Upon receiving the event trigger from EDA, the Ansible Automation Platform (AAP) initiates a pre-defined job. This job consists of two main tasks:
-    
-- 3.1: Gather Error Logs: AAP connects to the affected Web Server and collects the relevant raw error logs for analysis.
-- 3.2: Upload Logs to S3: The collected logs are then uploaded to an S3 bucket, making them accessible for the AI pipeline.
+ - 3.1: Gather Error Logs: AAP connects to the affected Web Server and collects the relevant raw error logs for analysis.
+ - 3.2: Upload Logs to S3: The collected logs are then uploaded to an S3 bucket, making them accessible for the AI pipeline.
 
 5. Red Hat OpenShift AI Pipeline
 
