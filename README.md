@@ -24,6 +24,29 @@ The primary components are:
 - **Amazon S3 (or similar object storage)**: Used as a central repository for storing raw logs, incident reports, and generated playbooks.
 - **Red Hat OpenShift AI**: A platform for managing the lifecycle of predictive and generative AI (gen AI) models, at scale, across hybrid cloud environments. In this architecture, it runs a pipeline to process event data and generate intelligent responses.
 
+The entire process is orchestrated as a seamless, automated workflow, as illustrated by the numbered steps in the diagram:
+
+1. Event Occurs
+
+    An issue, such as a service failure or an error, occurs on the Web Server.
+
+2. Event Detection
+
+    Event-Driven Ansible (EDA) is configured with rulebooks to monitor the Web Server. It detects the event in real-time.
+
+3. Task Execution by AAP
+
+    Upon receiving the event trigger from EDA, the Ansible Automation Platform (AAP) initiates a pre-defined job. This job consists of two main tasks:
+        3.1: Gather Error Logs: AAP connects to the affected Web Server and collects the relevant raw error logs for analysis.
+        3.2: Upload Logs to S3: The collected logs are then uploaded to an S3 bucket, making them accessible for the AI pipeline.
+
+4. Red Hat OpenShift AI Pipeline
+
+    The upload of the logs to S3 triggers the Red Hat OpenShift AI pipeline, which performs the following steps:
+        4.1: Retrieve Raw Error Log: The pipeline retrieves the raw error log from the S3 bucket.
+        4.2: Generate Incident Report: Using a trained model, the pipeline analyzes the log data to understand the root cause and generates a human-readable incident report.
+        4.3: Generate Ansible Playbook: Based on its analysis, the AI generates a new, tailored Ansible Playbook designed to remediate the specific issue that was detected.
+
 ### Demo
 
 #### EDA Demo
