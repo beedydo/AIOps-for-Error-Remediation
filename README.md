@@ -28,23 +28,23 @@ The entire process is orchestrated as a seamless, automated workflow, as illustr
 
 **1. Event Occurs**
 
-    An issue, such as a service failure or an error, occurs on the Web Server.
+An issue, such as a service failure or an error, occurs on the Web Server.
 
 **2. Event Detection**
 
-    Event-Driven Ansible (EDA) is configured with rulebooks to monitor the Web Server. It detects the event in real-time.
+Event-Driven Ansible (EDA) is configured with rulebooks to monitor the Web Server. It detects the event in real-time.
 
-3. Task Execution by AAP
-   Upon receiving the event trigger from EDA, the Ansible Automation Platform (AAP) initiates a pre-defined job. This job consists of two main tasks:
- - 3.1: Gather Error Logs: AAP connects to the affected Web Server and collects the relevant raw error logs for analysis.
- - 3.2: Upload Logs to S3: The collected logs are then uploaded to an S3 bucket, making them accessible for the AI pipeline.
+**3. Task Execution by AAP**
 
-5. Red Hat OpenShift AI Pipeline
+Upon receiving the event trigger from EDA, the Ansible Automation Platform (AAP) initiates a pre-defined job. This job consists of two main tasks:
+- **3.1: Gather Error Logs**: AAP connects to the affected Web Server and collects the relevant raw error logs for analysis.
+- **3.2: Upload Logs to S3**: The collected logs are then uploaded to an S3 bucket, making them accessible for the AI pipeline.
 
-    The upload of the logs to S3 triggers the Red Hat OpenShift AI pipeline, which performs the following steps:
-        - 4.1: Retrieve Raw Error Log: The pipeline retrieves the raw error log from the S3 bucket.
-        - 4.2: Generate Incident Report: Using a trained model, the pipeline analyzes the log data to understand the root cause and generates a human-readable incident report.
-        - 4.3: Generate Ansible Playbook: Based on its analysis, the AI generates a new, tailored Ansible Playbook designed to remediate the specific issue that was detected.
+**4. Red Hat OpenShift AI Pipeline**
+We can trigger the Red Hat OpenShift AI pipeline now that we have the raw error logs of the Web Server, the pipeline performs the following steps:
+- **4.1: Retrieve Raw Error Log**: The pipeline retrieves the raw error log from the S3 bucket.
+- **4.2: Generate Incident Report**: Using a trained model, the pipeline analyzes the log data to understand the root cause and generates a human-readable incident report.
+- **4.3: Generate Ansible Playbook**: Based on its analysis, the AI generates a new, tailored Ansible Playbook designed to remediate the specific issue that was detected.
 
 ### Demo
 
