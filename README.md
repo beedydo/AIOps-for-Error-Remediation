@@ -14,8 +14,6 @@ This project demonstrates a powerful, event-driven architecture that leverages R
 This solution aim to demostrate the following strengths:
 
 - **Integrated AI-Platform:** OpenShift AI as a unified foundation, providing a single consistent environment for entire machine learning lifecycle including development, serving models, MLOps.
-  
-- 
 
 ### Demo Video
 TODO
