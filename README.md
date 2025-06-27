@@ -2,15 +2,26 @@
 
 ## About
 
-## Background
+### Background
 This project demonstrates a powerful, event-driven architecture that leverages Red Hat OpenShift AI to automate IT incident response. This proof of concept can automatically detect issues, gather diagnostics, use LLM to generate incident reports and ignition remediation playbooks that engineers can use to serve as a starting point to write their remediation playbook instead of writing it from scratch.
 
-## Technology Highlights:
+### Technology Highlights:
 - Ansible Automation Platform
 - Event-Driven Ansible
 - OpenShift AI (Workbench, Model Server, Pipeline)
 
-## Use Case
+### Solution Discussion
+This solution aim to demostrate the following strengths:
+
+- **Integrated AI-Platform:** OpenShift AI as a unified foundation, providing a single consistent environment for entire machine learning lifecycle including development, serving models, MLOps.
+  
+- 
+
+### Demo Video
+TODO
+
+
+### Use Case
 
 ![User Journey Diagram](/assets/user_journey.png)
 
@@ -49,10 +60,3 @@ We can trigger the Red Hat OpenShift AI pipeline now that we have the raw error 
 - **4.1: Retrieve Raw Error Log**: The pipeline retrieves the raw error log from the S3 bucket.
 - **4.2: Generate Incident Report**: Using a locally deployed LLM model on OpenShift AI, the pipeline analyzes the log data to understand the root cause and generates a human-readable incident report.
 - **4.3: Generate Ansible Playbook**: Based on its analysis, the LLM model generates a new, tailored Ansible Playbook designed to remediate the specific issue that was detected.
-
-### Demo
-
-#### EDA Demo
-[TODO]
-#### Pipeline Demo
-[TODO]
