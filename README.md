@@ -19,15 +19,14 @@ This solution aim to demostrate the following strengths:
 TODO
 
 
-### Use Case
-
-![User Journey Diagram](/assets/user_journey.png)
+## Use Case
 
 In modern IT environments, responding to system failures quickly and effectively is crucial. This proof of concept demo showcases how AIOps can be incorporated into the workflow that begins with a Incident Alert (like a web server failure) and lead to a faster closure. This AIOps approach aims to automate the writing of initial incident report and initial remdiation playbook leading to quicker escalation and remediation of an Incident Alert.
 
+![User Journey Diagram](/assets/user_journey.png)
+
 ## Architecture
 
-![Architecture Diagram](/assets/architecture_diagram.png)
 
 The primary components are:
 
@@ -58,3 +57,6 @@ We can trigger the Red Hat OpenShift AI pipeline now that we have the raw error 
 - **4.1: Retrieve Raw Error Log**: The pipeline retrieves the raw error log from the S3 bucket.
 - **4.2: Generate Incident Report**: Using a locally deployed LLM model on OpenShift AI, the pipeline analyzes the log data to understand the root cause and generates a human-readable incident report.
 - **4.3: Generate Ansible Playbook**: Based on its analysis, the LLM model generates a new, tailored Ansible Playbook designed to remediate the specific issue that was detected.
+
+![Architecture Diagram](/assets/architecture_diagram.png)
+
