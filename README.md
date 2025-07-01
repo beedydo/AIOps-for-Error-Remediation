@@ -17,7 +17,7 @@ This solution aim to demostrate the following strengths:
 
 ### Demo Video
 TODO
-
+![pipeline](https://youtu.be/px6fFbkIGBw)
 
 ## Use Case
 
