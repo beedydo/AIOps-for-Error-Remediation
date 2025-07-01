@@ -16,6 +16,11 @@ This solution aim to demostrate the following strengths:
 - **Integrated AI-Platform:** OpenShift AI as a unified foundation, providing a single consistent environment for entire machine learning lifecycle including development, serving models, MLOps.
 
 ### Demo Video
+
+#### Event-Driven Ansible
+[![Pipeline](https://img.youtube.com/vi/px6fFbkIGBw/maxresdefault.jpg)](https://youtu.be/px6fFbkIGBw)
+
+#### OpenShift AI Pipeline
 [![Pipeline](https://img.youtube.com/vi/M4ih6VVqvvo/maxresdefault.jpg)](https://youtu.be/M4ih6VVqvvo)
 
 ## Use Case
