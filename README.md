@@ -16,8 +16,7 @@ This solution aim to demostrate the following strengths:
 - **Integrated AI-Platform:** OpenShift AI as a unified foundation, providing a single consistent environment for entire machine learning lifecycle including development, serving models, MLOps.
 
 ### Demo Video
-TODO
-[![alt text](https://img.youtube.com/vi/video-id/0.jpg)](https://www.youtube.com/watch?v=video-id)
+[![Pipeline](https://img.youtube.com/vi/M4ih6VVqvvo/maxresdefault.jpg)](https://youtu.be/M4ih6VVqvvo)
 
 ## Use Case
 
